@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Update User</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+  <label for="name" >Enter name:</label>
+  <input type="text" th:field="*{username}"  id="name"/>
+  <label for="lev" >Enter level:</label>
+  <input type="text" th:field="*{level}"  id="lev"/>
+  <label for="pas" >Enter password:</label>
+  <input type="text" th:field="*{password}"  id="pas"/>
+  <label for="pas" >Enter Role:</label>
+  <input type="text" th:field="*{roles}"  id="role"/>
+  <br/>
+  <input type="submit" value="Update!"/>
+
+  <br/>
+  <br/>
+  <br/>
+  <a href="/logout"><input type ="submit" value="Вернутся назад"/></a>
+</form>
+
+</body>
+</html>

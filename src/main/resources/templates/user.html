@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<h1>Здесь предоставлена информация о пользователе</h1>
+<table class="table table-header">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Level</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}">
+        <td th:text="${user.getUsername()}">
+        <td th:text="${user.getRoles()}">
+        <td th:text="${user.getLevel()}"></td>
 
+        <br/>
+        <br/>
+        <br/>
 
+    </tr>
+    </tbody>
+</table>
+
+    <br/>
+    <br/>
+    <br/>
+    <a href="/logout"><input type ="submit" value="Выйти из профиля"/></a>
+    <br/>
+    <br/>
 </body>
 </html>
