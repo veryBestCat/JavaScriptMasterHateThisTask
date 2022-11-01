@@ -19,7 +19,6 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-
     @Column(name = "username", nullable = false, length = 20)
     @Size(min=3, message = "Не меньше 3ёх знаков")
     private String username;
@@ -33,7 +32,7 @@ public class User implements UserDetails {
     private String level;
 
     @Column(name = "password",nullable = false, length = 150)
-    @Size(min=4, message = "Не меньше 4 знаков")
+    @Size(min=4, message = "Не меньше 4 знаков") //@NotBlank аннотация не пропускающая пустоты
     private String password;
 
     @Transient
@@ -47,7 +46,7 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -55,11 +54,9 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-
     public void addRole(Role role) {
         this.roles.add(role);
     }
-
 
     public User() {
     }
