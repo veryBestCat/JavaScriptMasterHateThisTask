@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +28,14 @@ public class UserService implements UserServiceIn {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
+
     @Override
     public User findUserById(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         return user.orElse(new User());
     }
 
-    @Transactional
+
     @Override
     public List<User> allUsers() {
         return userRepository.findAll();
@@ -77,13 +78,12 @@ public class UserService implements UserServiceIn {
         userRepository.save(user);
     }
 
-    @Transactional
+
     @Override
     public User findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
 
-    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUserName(username);
