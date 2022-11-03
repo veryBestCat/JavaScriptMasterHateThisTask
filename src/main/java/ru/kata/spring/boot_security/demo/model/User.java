@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
-public class User implements UserDetails {
+public class User  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -49,7 +49,6 @@ public class User implements UserDetails {
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

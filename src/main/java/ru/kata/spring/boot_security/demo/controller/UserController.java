@@ -24,4 +24,9 @@ public class UserController {
         model.addAttribute("users", userRepository.findByUsername(principal.getName()));
         return ("user");
     }
+    @GetMapping("/index")
+    public String test(Model model){
+        model.addAttribute("test", "TEST");
+        return ("/index");
+    }
 }
