@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +12,16 @@ import java.security.Principal;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping("/user")
     public String show(Principal principal, Model model) {
         model.addAttribute("users", userRepository.findByUsername(principal.getName()));
         return ("user");
-    }
-    @GetMapping("/index")
-    public String test(Model model){
-        model.addAttribute("test", "TEST");
-        return ("/index");
     }
 }

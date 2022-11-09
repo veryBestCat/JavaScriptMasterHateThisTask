@@ -15,7 +15,8 @@ import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT user FROM User user JOIN FETCH user.roles where user.username = :username")
+    @Query("SELECT u FROM User u JOIN FETCH u.roles where u.username = :username")
     User findByUsername(String username);
+
 
 }

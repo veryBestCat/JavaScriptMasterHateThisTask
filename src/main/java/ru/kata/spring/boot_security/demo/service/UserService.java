@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -35,6 +33,10 @@ public class UserService implements UserServiceIn {
         return user.orElse(new User());
     }
 
+    public Set<Role> getUserRole(User user) {
+        Set<Role> userNew = user.getRoles();
+        return userNew;
+    }
 
     @Override
     public List<User> allUsers() {
@@ -61,7 +63,6 @@ public class UserService implements UserServiceIn {
     @Transactional
     @Override
     public void deleteUser(Long userId) {
-        userRepository.findById(userId);
         userRepository.deleteById(userId);
         System.out.println("Пользователь " + userId + " удален");
 
@@ -97,5 +98,10 @@ public class UserService implements UserServiceIn {
     @Override
     public Collection<? extends GrantedAuthority> mapRoleToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+    }
+
+
+    public Set<Role> findByIdRoles(Set<Long> id) {
+        return (Set<Role>) roleRepository.findAllById(id);
     }
 }
