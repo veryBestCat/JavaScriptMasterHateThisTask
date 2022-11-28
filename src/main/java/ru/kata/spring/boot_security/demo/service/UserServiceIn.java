@@ -4,11 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
 
 public interface UserServiceIn extends UserDetailsService {
 

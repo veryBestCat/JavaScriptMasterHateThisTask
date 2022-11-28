@@ -1,12 +1,9 @@
 package ru.kata.spring.boot_security.demo.model;
 
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,7 +18,7 @@ public class User  implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username",  length = 20)
     @Size(min=3, message = "Не меньше 3ёх знаков")
     private String username;
 
@@ -29,12 +26,13 @@ public class User  implements UserDetails {
         this.username = username;
     }
 
-    @Column(name = "level", nullable = false, length = 20)
+    @Column(name = "level",  length = 20)
     @Size(min=4, message = "Не меньше 4 знаков")
-    private String level;
 
-    @Column(name = "password",nullable = false, length = 150)
-    @Size(min=4, message = "Не меньше 4 знаков") //@NotBlank аннотация не пропускающая пустоты
+    private String level;
+    @Column(name = "password", length = 150)
+    @Size(min=4, message = "Не меньше 4 знаков")
+    @NotBlank
     private String password;
 
     @Transient
@@ -115,7 +113,7 @@ public class User  implements UserDetails {
     }
 
     @Override
-    public boolean isEnabled() { // аккаунт активен/включен/работает
+    public boolean isEnabled() { // аккаунт активен
         return true;
     }
 

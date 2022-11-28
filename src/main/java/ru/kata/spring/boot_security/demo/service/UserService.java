@@ -11,7 +11,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,7 +50,7 @@ public class UserService implements UserServiceIn {
             System.out.println("Пользователь с таким именем уже существует!");
             return false;
         } else {
-            user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+            user.setRoles(user.getRoles());
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setLevel(user.getLevel());
             userRepository.save(user);
@@ -74,16 +73,15 @@ public class UserService implements UserServiceIn {
         User user = findUserById(id);
         user.setUsername(userUpDate.getUsername());
         user.setLevel(userUpDate.getLevel());
-        user.setPassword(new BCryptPasswordEncoder().encode(userUpDate.getPassword()));
+        user.setPassword(userUpDate.getPassword());
         user.setRoles(userUpDate.getRoles());
-        userRepository.save(user);
+        userRepository.save(userUpDate);
     }
 
     @Override
     public User findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -100,8 +98,4 @@ public class UserService implements UserServiceIn {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-
-    public Set<Role> findByIdRoles(Set<Long> id) {
-        return (Set<Role>) roleRepository.findAllById(id);
-    }
 }

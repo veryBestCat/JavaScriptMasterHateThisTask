@@ -1,19 +1,15 @@
 package ru.kata.spring.boot_security.demo.controller;
-
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import java.util.List;
 
-import java.security.Principal;
 
-@Controller
+@RestController
 public class AdminController {
-    private final UserService userService;
 
+    private final UserService userService;
     private final UserRepository userRepository;
 
     public AdminController(UserService userService, UserRepository userRepository) {
@@ -21,35 +17,32 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/admin")
-    public String index(Model model) {
-        model.addAttribute("users", userService.allUsers());
-        model.addAttribute("newUser", new User());
-        return ("admin");
-    }
+    @GetMapping("/admin-all")
+    private List<User> allUsers() {
+        return userService.allUsers();
 
-    @GetMapping("/admin/")
-    public String getUserRole(@ModelAttribute("user") User user, Model model, Principal principal) {
-        model.addAttribute("getRole",userService.getUserRole(user));
-        return ("admin");
+    }
+    @GetMapping("/admin-findId/{id}")
+    private User findUserById(@PathVariable("id")Long id){
+        return userService.findUserById(id);
     }
 
     @PostMapping("/admin-new")
-    public String create(@ModelAttribute("user") User user,Model model) {
-        model.addAttribute("newUser", new User());
+    public void create(@RequestBody User user)
+    {
         userService.saveUser(user);
-        return "redirect:/admin";
     }
 
-    @PatchMapping ("admin-update/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+    @PatchMapping("admin-update/{id}")
+    public User update(@RequestBody User user, @PathVariable("id") Long id) {
+        System.out.println(user);
         userService.update(id, user);
-        return "redirect:/admin";
+        return user;
     }
 
     @DeleteMapping("admin/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
+    public void delete(@PathVariable("id") Long id) {
+       userService.deleteUser(id);
     }
+
 }
