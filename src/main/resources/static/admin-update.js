@@ -6,10 +6,9 @@ updateButton.onclick = function () {
     redirect()
 }
 
-
 async function updateUser(id) {
     let form = document.forms["UpdateForm"];
-    let response = await fetch('admin-update/' + id, {
+    let response = await fetch('/api/admin/users/update/' + id, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
@@ -26,8 +25,8 @@ async function updateUser(id) {
     })
 }
 
-function findUserById(Id) {
-    fetch('admin-findId/' + Id).then(res => {
+function findUserByIdForUpdate(Id) {
+    fetch('api/admin/users/' + Id).then(res => {
         res.json().then(data => {
             openUpdateModal(data)
         })
@@ -35,7 +34,6 @@ function findUserById(Id) {
 }
 
 function openUpdateModal(userInfo) {
-
 
     let form = document.forms["UpdateForm"];
 

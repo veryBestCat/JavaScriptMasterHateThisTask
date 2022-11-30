@@ -14,14 +14,13 @@ public interface UserServiceIn extends UserDetailsService {
 
     public User findUserById(Long userId);
 
-    public List<User> allUsers();
+    public List<User> getAllUsers();
 
     public boolean saveUser(User user);
 
     public void deleteUser(Long userId);
 
-    public void update(Long id, User userUpDate);
+    public void updateUser(Long id, User userUpDate);
 
-    public Collection<? extends GrantedAuthority> mapRoleToAuthorities(Collection<Role> roles);
 
 }

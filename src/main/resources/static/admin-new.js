@@ -8,10 +8,9 @@ greatButton.onclick = async function () {
     getTableUser()
 }
 
-
 async function grUser() {
     let user = greatUser()
-    let response = await fetch('admin-new', {
+    let response = await fetch('api/admin/users/new', {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
@@ -32,7 +31,6 @@ function arrayBoost() {
     })
     return selectedRoles;
 }
-
 
 function greatUser() {
     let user = {

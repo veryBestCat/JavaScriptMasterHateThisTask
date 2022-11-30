@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     await getUser()
 })
 
+
+
 async function getUser() {
     let getUser = await fetch('user-info') // посылаем запрос
     const table = document.getElementById("tableUser")

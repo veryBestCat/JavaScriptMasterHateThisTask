@@ -14,9 +14,9 @@ public class ErrorController {
 
     private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
 
-    @ExceptionHandler(Throwable.class)
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String exception(final Throwable throwable, final Model model) {
+    public String exception(final Exception throwable, final Model model) {
         logger.error("Иди исправляй свои тупые ошибки", throwable);
         String errorMessage = (throwable != null ? throwable.getMessage() : "Неизвестная ошибка");
         model.addAttribute("errorMessage", errorMessage);

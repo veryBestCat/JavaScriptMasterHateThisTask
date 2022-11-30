@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -32,13 +33,13 @@ public class UserService implements UserServiceIn {
         return user.orElse(new User());
     }
 
-    public Set<Role> getUserRole(User user) {
+    public Set<Role> getUserRoles(User user) {
         Set<Role> userNew = user.getRoles();
         return userNew;
     }
 
     @Override
-    public List<User> allUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -69,12 +70,11 @@ public class UserService implements UserServiceIn {
 
     @Transactional
     @Override
-    public void update(Long id, User userUpDate) {
+    public void updateUser(Long id, User userUpDate) {
         User user = findUserById(id);
         user.setUsername(userUpDate.getUsername());
         user.setLevel(userUpDate.getLevel());
-        user.setPassword(userUpDate.getPassword());
-        user.setRoles(userUpDate.getRoles());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(userUpDate);
     }
 
@@ -85,17 +85,7 @@ public class UserService implements UserServiceIn {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUserName(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRoleToAuthorities(user.getRoles()));
-    }
-
-    @Transactional
-    @Override
-    public Collection<? extends GrantedAuthority> mapRoleToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+        return new org.springframework.security.core.userdetails.User(findByUserName(username).getUsername(), findByUserName(username).getPassword(), findByUserName(username).getRoles());
     }
 
 }

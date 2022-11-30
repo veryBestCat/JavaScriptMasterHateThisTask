@@ -1,7 +1,7 @@
 
 async function delUser(id) {
 
-    let response = await fetch('admin/'+ id, {
+    let response = await fetch('api/admin/users/'+ id, {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
@@ -10,8 +10,8 @@ async function delUser(id) {
     })
 }
 
-function openModalByUserId2(Id) {
-    fetch('admin-findId/' + Id).then(res => {
+function findUserByIdForDelete(Id) {
+    fetch('api/admin/users/' + Id).then(res => {
         res.json().then(data => {
             openDeleteModal(data)
         })
@@ -19,6 +19,7 @@ function openModalByUserId2(Id) {
 }
 
 function openDeleteModal(userInfo) {
+    console.log(userInfo)
     const deleteUser = document.getElementById("modal")
     deleteUser.innerHTML = `
 <div class="row">

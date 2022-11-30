@@ -9,12 +9,12 @@ import java.security.Principal;
 
 
 @RestController
-public class UserController {
+public class UserRESTController {
 
     private final UserRepository userRepository;
     private final UserService userService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
+    public UserRESTController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
         this.userService = userService;
     }
